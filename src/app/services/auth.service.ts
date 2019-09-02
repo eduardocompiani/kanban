@@ -35,19 +35,17 @@ export class AuthService {
       });
   }
 
-  login(username: string, passoword: string) {
+  login(email: string, passoword: string) {
     this
       .authService
       .auth
-      .signInWithEmailAndPassword(username, passoword)
+      .signInWithEmailAndPassword(email, passoword)
       .then((userLogged) => {
         this
           .db
           .collection<User>('users', ref => ref.where('id', '==', userLogged.user.uid))
           .valueChanges()
           .subscribe(user => {
-            console.log(user);
-            debugger;
             this.currentUser = user[0];
             this.router.navigate(['/']);
           });
@@ -61,7 +59,7 @@ export class AuthService {
       .signOut()
       .then(() => {
         this.currentUser = null;
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       });
   }
 }
