@@ -1,0 +1,41 @@
+<form [formGroup]="registerForm">
+    <div id="col">
+        <div id="row">
+            <mat-form-field>
+                <input matInput type="text" placeholder="Nome" formControlName="name">
+                <mat-error *ngIf="registerForm.controls['name'].hasError('required')">
+                    Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="email" placeholder="Email" formControlName="email">
+                <mat-error *ngIf="registerForm.controls['email'].hasError('email') && !registerForm.controls['email'].hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="registerForm.controls['email'].hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="password" placeholder="Senha" formControlName="password">
+                <mat-error *ngIf="registerForm.controls['password'].hasError('required')">
+                    Password is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="password" placeholder="Confirmar Senha" formControlName="passwordConfirmation" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="registerForm.hasError('required')">
+                    Password confirmation is <strong>required</strong>
+                </mat-error>
+                <mat-error *ngIf="registerForm.hasError('notSame')">
+                    Passwords do not match
+                </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="register()" [disabled]="!registerForm.valid">Register</button>
+        </div>
+    </div>
+</form>
